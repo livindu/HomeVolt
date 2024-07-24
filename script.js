@@ -1,40 +1,41 @@
-
-// Google Sheets API URL (replace with your published Google Sheets URL)
-const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTrKiwFo6dNnSAqUctnDmv3QojlsAbd3KY3kExYjwe6Arbs-97ddtIfrKHwnpFYMU4Vp-m4YThsh2nl/pub?output=csv';
-
+    // Replace with your Google Sheets API key
+const apiKey = 'AIzaSyCJUpx3d2aRxgOnbbB73WBpcZ1oI2YAauc';
+// Replace with your Google Sheets ID
+const sheetId = '14g5GswUj6mj411o2dYOPghzJthp97hfz5DZvOU3O5Ww';
+// Specify the range of data you want to fetch (e.g., A1:B10)
+const range = 'Sheet1!A1:B29';
 
 document.addEventListener('DOMContentLoaded', function() {
     fetchSheetData();
     document.getElementById('mainBtn')?.addEventListener('click', showmainpower);
 });
 
-// Function to fetch data from Google Sheet
+// Function to fetch data from Google Sheet using Google Sheets API
 function fetchSheetData() {
-    fetch(sheetURL)
-        .then(response => response.text())
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
+    
+    fetch(url)
+        .then(response => response.json())
         .then(data => {
-            const parsedData = processCSV(data);
+            const parsedData = processSheetData(data);
             updateStatus(parsedData);
         })
         .catch(error => console.error('Error fetching data:', error));
 }
 
-// Function to process CSV data
-function processSheetCSV(data) {
-    const rows = data.split('\n');
-    const headers = rows[0].split(',');
-    const voltageIndex = headers.indexOf('voltage');
-    const currentIndex = headers.indexOf('current');
-    
+// Function to process Google Sheets data
+function processSheetData(data) {
+    const rows = data.values;
     let voltage = 0.0;
     let current = 0.0;
-    
+
+    // Assuming the first row contains headers and the second row contains the latest data
     if (rows.length > 1) {
-        const latestRow = rows[rows.length - 1].split(',');
-        voltage = parseFloat(latestRow[voltageIndex]);
-        current = parseFloat(latestRow[currentIndex]);
+        const latestRow = rows[1];
+        voltage = parseFloat(latestRow[0]); // Adjust the index based on your sheet structure
+        current = parseFloat(latestRow[1]); // Adjust the index based on your sheet structure
     }
-    
+
     return { voltage, current };
 }
 
@@ -75,8 +76,6 @@ function processCSV(data, device) {
     return { time, power };
 }
 
-
- //  define y and x axis 
 function updateChart(data, device) {
     const ctx = document.getElementById('powerChart').getContext('2d');
     if (window.myChart) {
@@ -126,7 +125,6 @@ function updateChart(data, device) {
     });
 }
 
-//   function to show power consumption for specific devices on button one click
 function showDevicePower(device) {
     document.getElementById('deviceIframe').style.display = 'none';
     document.getElementById('powerChart').style.display = 'block';
@@ -135,17 +133,10 @@ function showDevicePower(device) {
     fetchdata(device);
 }
 
-//  main power consumption chart
 function showmainpower() {
     showDevicePower('main');
 }
 
-document.getElementById('mainBtn')?.addEventListener('click', showmainpower);
-document.addEventListener('DOMContentLoaded', function() {
-    if (document.getElementById('mainBtn')) {
-        showmainpower();
-    }
-});
 
 
 
@@ -160,3 +151,6 @@ function logout() {window.location.href = 'index.html';}
          {window.location.href = 'dashboard.html';} 
     else 
          {alert('Invalid User Credentials');}});
+
+
+
