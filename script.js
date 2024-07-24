@@ -1,6 +1,6 @@
 
 // Google Sheets API URL (replace with your published Google Sheets URL)
-const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTrKiwFo6dNnSAqUctnDmv3QojlsAbd3KY3kExYjwe6Arbs-97ddtIfrKHwnpFYMU4Vp-m4YThsh2nl/pubhtmloutput=csv';
+const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTrKiwFo6dNnSAqUctnDmv3QojlsAbd3KY3kExYjwe6Arbs-97ddtIfrKHwnpFYMU4Vp-m4YThsh2nl/pub?output=csv';
 
 
 document.addEventListener('DOMContentLoaded', function() {
