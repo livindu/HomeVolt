@@ -47,7 +47,7 @@ function updateStatus(data) {
 
 // Existing functions for chart updates
 function fetchdata(device) {
-    fetch('data.csv')
+    fetch('https://docs.google.com/spreadsheets/d/1sAMNYYz1C2wIRcYA9RqKjKGprR3Lu6DLK0xBm-Rg4EA/pub?output=csv')
         .then(response => response.text())
         .then(data => { 
             const parsedData = processCSV(data, device);
