@@ -145,8 +145,9 @@ function showCombinedPower() {
     document.getElementById('powerChart').style.display = 'block';
     document.getElementById('chartTitle').style.display = 'block';
     document.getElementById('chartTitle').innerText = 'Combined Power Consumption';
-    fetchCombinedData(['main', 'kettle', 'fan', 'computer', 'mobile', 'iron']);
-}
+    
+    const devices = ['main', 'kettle', 'fan', 'computer', 'mobile', 'iron'];
+    fetchCombinedData(devices);
 
 //  defining the logout function
 function logout() { window.location.href = 'index.html'; }
@@ -162,6 +163,3 @@ document.getElementById('loginForm')?.addEventListener('submit', function(event)
         alert('Invalid User Credentials');
     }
 });
-
-
-
